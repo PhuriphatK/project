@@ -11,7 +11,7 @@ using namespace std;
 //     string name[15];
 // };
 
-void showData(vector<string> a,string b[],int N, int M){
+void showData(vector<string> &a,string b[],int N, int M){
     for(int i = 0; i < N*M; i++){
         if(i == 0) cout << setw(12) <<b[i];
         cout << setw(10);
@@ -34,11 +34,12 @@ void updatefile(vector<string> status){
    new_data.close();
 }
 
-bool Check(vector<string> &a,string b,int c,int d){
+bool Check(vector<string> &a, string b,int c, int d){
     if(c == 1 && a[d-1] == "Emply"){
         a[d-1] = b;
         return true;
-    }else if(c == 2 && a[d+4] == "Emply"){
+    }
+    else if(c == 2 && a[d+4] == "Emply"){
         a[d+4] = b;
         return true;
     }else if(c == 3 && a[d+9] == "Emply"){
@@ -88,15 +89,17 @@ int main(){
     cout << "Please write your nickname no more 5 characters\n";
     cout << "[Nickname] :";
     cin >> Nickname;
-
-    bool x = true;
-    while(x != Check(status,Nickname,N_time,Table)){
+    
+    bool x = Check(status,Nickname,N_time,Table);
+    cout << x;
+    while(x == false){
         cout << "Sorry,These is a table that has already booked. Plaese make a new reservation\n";
         cout << "*****************************************************************\n";
         cout << "[Choose Time] : ";
         cin >> N_time;
         cout << "[Choose Table] : ";
         cin >> Table;
+        x = Check(status,Nickname,N_time,Table);
     }
-    
+    cout << status[1];
 }
