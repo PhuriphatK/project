@@ -11,7 +11,7 @@ using namespace std;
 //     string name[15];
 // };
 
-void showData(vector<string> a,string b[],int N, int M){
+void showData(vector<string> &a,string b[],int N, int M){
     for(int i = 0; i < N*M; i++){
         if(i == 0) cout << setw(12) <<b[i];
         cout << setw(10);
@@ -34,14 +34,18 @@ void updatefile(vector<string> status){
    new_data.close();
 }
 
-void Check(vector<string> &a,string b,int c,int d){
+bool Check(vector<string> &a, string b,int c, int d){
     if(c == 1 && a[d-1] == "Emply"){
         a[d-1] = b;
-    }else if(c == 2 && a[d+4] == "Emply"){
+        return true;
+    }
+    else if(c == 2 && a[d+4] == "Emply"){
         a[d+4] = b;
-    }else if(a[d+9] == "Emply"){
+        return true;
+    }else if(c == 3 && a[d+9] == "Emply"){
         a[d+9] = b;
-    }   
+        return true;
+    }else return false;
 }
 
 int main(){
@@ -87,6 +91,7 @@ int main(){
     cin >> Nickname;
     
     bool x = Check(status,Nickname,N_time,Table);
+    cout << x;
     while(x == false){
         cout << "Sorry,These is a table that has already booked. Plaese make a new reservation\n";
         cout << "*****************************************************************\n";
