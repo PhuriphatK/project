@@ -34,14 +34,17 @@ void updatefile(vector<string> status){
    new_data.close();
 }
 
-void Check(vector<string> &a,string b,int c,int d){
+bool Check(vector<string> &a,string b,int c,int d){
     if(c == 1 && a[d-1] == "Emply"){
         a[d-1] = b;
+        return true;
     }else if(c == 2 && a[d+4] == "Emply"){
         a[d+4] = b;
-    }else if(a[d+9] == "Emply"){
+        return true;
+    }else if(c == 3 && a[d+9] == "Emply"){
         a[d+9] = b;
-    }   
+        return true;
+    }else return false;
 }
 
 int main(){
@@ -85,16 +88,15 @@ int main(){
     cout << "Please write your nickname no more 5 characters\n";
     cout << "[Nickname] :";
     cin >> Nickname;
-    
-    bool x = Check(status,Nickname,N_time,Table);
-    while(x == false){
+
+    bool x = true;
+    while(x != Check(status,Nickname,N_time,Table)){
         cout << "Sorry,These is a table that has already booked. Plaese make a new reservation\n";
         cout << "*****************************************************************\n";
         cout << "[Choose Time] : ";
         cin >> N_time;
         cout << "[Choose Table] : ";
         cin >> Table;
-        x = Check(status,Nickname,N_time,Table);
     }
-    cout << status[1];
+    
 }
