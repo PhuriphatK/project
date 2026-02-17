@@ -11,7 +11,13 @@ using namespace std;
 //     string name[15];
 // };
 
-void showData(vector<string> &a,string b[],int N, int M){
+void showData(vector<string> &a,string b[],int c[],int N, int M){
+    cout << setw(12) << "Time/Table";
+    for(int i = 0;i < M; i++){
+        if(i == 0) cout << setw(8) << c[i];
+        if(i > 0) cout << setw(10) << c[i];
+    }
+    cout << "\n--------------|---------|---------|---------|---------|---------|\n";
     for(int i = 0; i < N*M; i++){
         if(i == 0) cout << setw(12) <<b[i];
         cout << setw(10);
@@ -23,11 +29,12 @@ void showData(vector<string> &a,string b[],int N, int M){
             cout << setw(12) <<b[(i+1)/M];
         }
     }
+    cout << "\n--------------|---------|---------|---------|---------|---------|\n";
 }
 
 void updatefile(vector<string> status){
    ofstream new_data;
-   new_data.open("");
+   new_data.open("status table.txt");
    for(int i = 0; i < status.size(); i++){
       new_data << status[i] << "\n";
    }
@@ -69,29 +76,17 @@ int main(){
     }
     source.close(); //ปิดไฟล์ที่อ่าน
     
-    cout << setw(12) << "Time/Table";
-    for(int i = 0;i < N2; i++){
-        if(i == 0) cout << setw(8) << N_table[i];
-        if(i > 0) cout << setw(10) << N_table[i];
-    }
-    cout << "\n--------------|---------|---------|---------|---------|---------|\n";
-    showData(status,time,N1,N2);
-    cout << "\n--------------|---------|---------|---------|---------|---------|\n";
-    cout << "*****************************************************************\n";
-    for(int k = 0; k < N1; k++){
-        cout << "Choose Time " << time[k] << " -> Enter " << k+1 << "\n";
-    }
+    showData(status,time,N_table,N1,N2);
     cout << "*****************************************************************\n";
     cout << "[Choose Time] : ";
     cin >> N_time;
     cout << "[Choose Table] : ";
     cin >> Table;
     cout << "Please write your nickname no more 5 characters\n";
-    cout << "[Nickname] :";
+    cout << "[Nickname] : ";
     cin >> Nickname;
     
     bool x = Check(status,Nickname,N_time,Table);
-    cout << x;
     while(x == false){
         cout << "Sorry,These is a table that has already booked. Plaese make a new reservation\n";
         cout << "*****************************************************************\n";
@@ -101,5 +96,6 @@ int main(){
         cin >> Table;
         x = Check(status,Nickname,N_time,Table);
     }
-    cout << status[1];
+    updatefile(status);
+    showData(status,time,N_table,N1,N2);
 }
