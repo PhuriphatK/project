@@ -1,8 +1,8 @@
-#include<iostream>
-#include<string>
-#include<fstream>
-#include<iomanip>
-#include<vector>
+#include <iostream>
+#include <string>
+#include <fstream>
+#include <iomanip>
+#include <vector>
 using namespace std;
 
 // class Data{
@@ -11,91 +11,120 @@ using namespace std;
 //     string name[15];
 // };
 
-void showData(vector<string> &a,string b[],int c[],int N, int M){
+void showData(vector<string> &a, string b[], int c[], int N, int M)
+{
     cout << setw(12) << "Time/Table";
-    for(int i = 0;i < M; i++){
-        if(i == 0) cout << setw(8) << c[i];
-        if(i > 0) cout << setw(10) << c[i];
+    for (int i = 0; i < M; i++)
+    {
+        if (i == 0)
+            cout << setw(8) << c[i];
+        if (i > 0)
+            cout << setw(10) << c[i];
     }
     cout << "\n--------------|---------|---------|---------|---------|---------|\n";
-    for(int i = 0; i < N*M; i++){
-        if(i == 0) cout << setw(12) <<b[i];
+    for (int i = 0; i < N * M; i++)
+    {
+        if (i == 0)
+            cout << setw(12) << b[i];
         cout << setw(10);
         cout << a[i];
-        if(i == 14) break;
-        if((i+1) % M == 0){ 
-            cout << endl ;
+        if (i == 14)
+            break;
+        if ((i + 1) % M == 0)
+        {
+            cout << endl;
             cout << "--------------|---------|---------|---------|---------|---------|\n";
-            cout << setw(12) <<b[(i+1)/M];
+            cout << setw(12) << b[(i + 1) / M];
         }
     }
     cout << "\n--------------|---------|---------|---------|---------|---------|\n";
 }
 
-void updatefile(vector<string> status){
-   ofstream new_data;
-   new_data.open("status table.txt");
-   for(int i = 0; i < status.size(); i++){
-      new_data << status[i] << "\n";
-   }
-   new_data.close();
+void updatefile(vector<string> &status)
+{
+    ofstream new_data("status table.txt");
+    for (int i = 0; i < status.size(); i++)
+        new_data << status[i] << endl;
+    new_data.close();
 }
 
-bool Check(vector<string> &a, string b,int c, int d){
-    if(c == 1 && a[d-1] == "Emply"){
-        a[d-1] = b;
+bool Check(vector<string> &a, int time, int table)
+{
+    int index = (time - 1) * 5 + (table - 1);
+
+    if (a[index] == "Emply")
+    {
+        a[index] = "Booked";
         return true;
     }
-    else if(c == 2 && a[d+4] == "Emply"){
-        a[d+4] = b;
-        return true;
-    }else if(c == 3 && a[d+9] == "Emply"){
-        a[d+9] = b;
-        return true;
-    }else return false;
+    return false;
 }
 
-int main(){
+void receipt(string name, int table, string time)
+{
+    cout << "\n========================================\n";
+    cout << "       TABLE RESERVATION RECEIPT     \n";
+    cout << "========================================\n";
+    cout << left << setw(15) << " Customer" << ": " << name << endl;
+    cout << left << setw(15) << " Table No." << ": " << table << endl;
+    cout << left << setw(15) << " Time" << ": " << time << endl;
+    cout << "----------------------------------------\n";
+    cout << "        Thank you for booking           \n";
+    cout << "========================================\n\n";
+}
+
+int main()
+{
     // Data Customer = {{"10:00-12:00","13:00-15:00","16:00-18:00"},{1,2,3,4,5},"Emply","Emply","Emply","Emply","Emply","Emply","Emply","Emply","Emply","Emply","Emply","Emply","Emply","Emply","Emply"};
     string Nickname;
     int N_time;
     int Table;
-    string time[] = {"10:00-12:00","13:00-15:00","16:00-18:00"};
-    int N_table[] = {1,2,3,4,5};
-    int N1 = sizeof(time)/sizeof(time[0]);
-    int N2 = sizeof(N_table)/sizeof(N_table[0]);
-    vector<string> status(N1*N2);
+    string time[] = {"10:00-12:00", "13:00-15:00", "16:00-18:00"};
+    int N_table[] = {1, 2, 3, 4, 5};
+    int N1 = sizeof(time) / sizeof(time[0]);
+    int N2 = sizeof(N_table) / sizeof(N_table[0]);
+    vector<string> status(N1 * N2);
 
     ifstream source;
-    source.open("status table.txt"); //เปิดไฟล์ที่จะอ่าน 
+    source.open("status table.txt"); // เปิดไฟล์ที่จะอ่าน
     string texline;
     int number = 0;
-    while(getline(source,texline)){
+    while (getline(source, texline))
+    {
         status[number] = texline;
         number++;
     }
-    source.close(); //ปิดไฟล์ที่อ่าน
-    
-    showData(status,time,N_table,N1,N2);
+    source.close(); // ปิดไฟล์ที่อ่าน
+
+    showData(status, time, N_table, N1, N2);
     cout << "*****************************************************************\n";
     cout << "[Choose Time] : ";
     cin >> N_time;
     cout << "[Choose Table] : ";
     cin >> Table;
-    cout << "Please write your nickname no more 5 characters\n";
-    cout << "[Nickname] : ";
-    cin >> Nickname;
-    
-    bool x = Check(status,Nickname,N_time,Table);
-    while(x == false){
-        cout << "Sorry,These is a table that has already booked. Plaese make a new reservation\n";
-        cout << "*****************************************************************\n";
+
+    bool x = Check(status, N_time, Table);
+    while (x == false)
+    {
+        cout << "\n";
+        cout << "O ============================================================ O\n";
+        cout << "|  Sorry,Table already booked! Plaese make a new reservation.  |\n";
+        cout << "O ============================================================ O\n";
+        cout << "\n";
         cout << "[Choose Time] : ";
         cin >> N_time;
         cout << "[Choose Table] : ";
         cin >> Table;
-        x = Check(status,Nickname,N_time,Table);
+        x = Check(status, N_time, Table);
     }
+
+    cout << "Please write your nickname no more 5 characters\n";
+    cout << "[Nickname] : ";
+    cin >> Nickname;
+
     updatefile(status);
-    showData(status,time,N_table,N1,N2);
+    showData(status, time, N_table, N1, N2);
+
+    receipt(Nickname, Table, time[N_time - 1]);
+    return 0;
 }
