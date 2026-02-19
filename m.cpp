@@ -38,9 +38,9 @@ void showData(vector<string> &a, string b[], int c[], int N, int M)
         }
     }
     cout << "\n--------------|---------|---------|---------|---------|---------|\n";
-    cout << "Choose time: 10:00-12:00 -> Enter 1\n";
-    cout << "Choose time: 13:00-15:00 -> Enter 2\n";
-    cout << "Choose time: 16:00-18:00 -> Enter 3\n";
+    cout << "Choose time: 10:00-12:00 -> Enter 1\n"; //ใหม่
+    cout << "Choose time: 13:00-15:00 -> Enter 2\n"; //ใหม่
+    cout << "Choose time: 16:00-18:00 -> Enter 3\n"; //ใหม่
 }
 
 void updatefile(vector<string> &status)
@@ -102,17 +102,17 @@ int main()
     source.close(); // ปิดไฟล์ที่อ่าน
 
     while(Ans == "Y"){
-    cout << "Welcome to 3Student restaurant\n";
-    cout << "Please select the table you wish to reserve:\n";
+    cout << "Welcome to 3Student restaurant\n"; //ใหม่
+    cout << "Please select the table you wish to reserve:\n"; //ใหม่
     showData(status, time, N_table, N1, N2);
     cout << "*****************************************************************\n";
     cout << "[Choose Time] : ";
     cin >> N_time;
-    while(N_time > 3 || N_time < 1){
+    while(N_time > 3 || N_time < 1){ //ใหม่
         cout << "Wrong Choice! Please choose again!\n";
         cout << "[Choose Time] : ";
         cin >> N_time;
-    }
+    } //ใหม่
     cout << "[Choose Table] : ";
     cin >> Table;
 
@@ -137,10 +137,10 @@ int main()
 
     updatefile(status);
     receipt(Nickname, Table, time[N_time - 1]);
-    count++;
-    if(count == 15) break;
-    cout << "Would you like to make an additional booking? (Y/N): " ;
-    cin >> Ans;
+    count++; //ใหม่ ให้นับเพื่อไม่ได้ผู้ใช้เลือกเกิน15โต๊ะ
+    if(count == 15) break; //ใหม่
+    cout << "Would you like to make an additional booking? (Y/N): " ; //ใหม่
+    cin >> Ans; //ใหม่
     }
     return 0;
 }
