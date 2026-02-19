@@ -38,6 +38,9 @@ void showData(vector<string> &a, string b[], int c[], int N, int M)
         }
     }
     cout << "\n--------------|---------|---------|---------|---------|---------|\n";
+    cout << "Choose time: 10:00-12:00 -> Enter 1\n";
+    cout << "Choose time: 13:00-15:00 -> Enter 2\n";
+    cout << "Choose time: 16:00-18:00 -> Enter 3\n";
 }
 
 void updatefile(vector<string> &status)
@@ -81,6 +84,8 @@ int main()
     int Table;
     string time[] = {"10:00-12:00", "13:00-15:00", "16:00-18:00"};
     int N_table[] = {1, 2, 3, 4, 5};
+    string Ans = "Y";
+    int count = 0;
     int N1 = sizeof(time) / sizeof(time[0]);
     int N2 = sizeof(N_table) / sizeof(N_table[0]);
     vector<string> status(N1 * N2);
@@ -96,10 +101,18 @@ int main()
     }
     source.close(); // ปิดไฟล์ที่อ่าน
 
+    while(Ans == "Y"){
+    cout << "Welcome to 3Student restaurant\n";
+    cout << "Please select the table you wish to reserve:\n";
     showData(status, time, N_table, N1, N2);
     cout << "*****************************************************************\n";
     cout << "[Choose Time] : ";
     cin >> N_time;
+    while(N_time > 3 || N_time < 1){
+        cout << "Wrong Choice! Please choose again!\n";
+        cout << "[Choose Time] : ";
+        cin >> N_time;
+    }
     cout << "[Choose Table] : ";
     cin >> Table;
 
@@ -123,8 +136,11 @@ int main()
     cin >> Nickname;
 
     updatefile(status);
-    showData(status, time, N_table, N1, N2);
-
     receipt(Nickname, Table, time[N_time - 1]);
+    count++;
+    if(count == 15) break;
+    cout << "Would you like to make an additional booking? (Y/N): " ;
+    cin >> Ans;
+    }
     return 0;
 }
