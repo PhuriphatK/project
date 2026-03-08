@@ -5,6 +5,8 @@
 #include <vector>
 #include <chrono>
 #include <thread>
+#include <limits>
+#include <cctype>
 using namespace std;
 
 // class Data{
@@ -139,13 +141,23 @@ int main()
     string firstChoice;
     cin >> firstChoice;
 
-     if (firstChoice == "Y" || firstChoice == "y")
-    {
-        bool found = searchByName(status, time, N1, N2);
+    for (char &c : firstChoice)
+        c = tolower(c);
 
-        if (found)
-            return 0;   // เจอแล้วจบโปรแกรมเลย
+    while (firstChoice != "y" && firstChoice != "yes" && firstChoice != "n" && firstChoice != "no")
+    {
+        cout << "Please answer Yes or No (Y/N): ";
+        cin >> firstChoice;
+        for (char &c : firstChoice)
+            c = tolower(c);
     }
+
+    if (firstChoice == "y" || firstChoice == "yes")
+{
+    bool found = searchByName(status, time, N1, N2);
+    if (found)
+        return 0;
+}
 
     Ans = "Y";
 
@@ -156,37 +168,51 @@ int main()
         showData(status, time, N_table, N1, N2);
 
         cout << "[Choose Time] : ";
-        cin >> N_time;
-
-        while (N_time < 1 || N_time > 3)
-        {
-            cout << "Wrong Choice! Please choose again: ";
-            cin >> N_time;
-        }
+while (!(cin >> N_time) || N_time < 1 || N_time > 3)
+{
+    cout << "Invalid time! Please enter number 1-3: ";
+    cin.clear();
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+}
 
         cout << "[Choose Table] : ";
-        cin >> Table;
-
-        while (Table < 1 || Table > 5)
-        {
-            cout << "Wrong Table! Please choose again: ";
-            cin >> Table;
-        }
+        while (!(cin >> Table) || Table < 1 || Table > 5)
+{
+    cout << "Invalid table! Please enter number 1-5: ";
+    cin.clear();
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+}
 
         int index = (N_time - 1) * 5 + (Table - 1);
 
         if (status[index] == "Emply")
         {
-            
+
             cout << "[Enter Nickname] : ";
             cin >> Nickname;
 
-            status[index] = Nickname;   // เก็บชื่อจริง
+            status[index] = Nickname; // เก็บชื่อจริง
             updatefile(status);
 
             receipt(Nickname, Table, time[N_time - 1]);
             cout << "Would you like to make another booking? (Y/N): ";
             cin >> Ans;
+
+            for (char &c : Ans)
+                c = tolower(c);
+
+            while (Ans != "y" && Ans != "yes" && Ans != "n" && Ans != "no")
+            {
+                cout << "Please answer Yes or No (Y/N): ";
+                cin >> Ans;
+                for (char &c : Ans)
+                    c = tolower(c);
+            }
+
+            if (Ans == "yes")
+                Ans = "Y";
+            if (Ans == "no")
+                Ans = "N";
         }
         else
         {
