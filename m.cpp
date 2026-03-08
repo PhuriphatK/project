@@ -144,20 +144,20 @@ int main()
     for (char &c : firstChoice)
         c = tolower(c);
 
-    while (firstChoice != "y" && firstChoice != "yes" && firstChoice != "n" && firstChoice != "no")
+    while (firstChoice != "y" && firstChoice != "yes" && firstChoice != "n" && firstChoice != "no") // แก้ให้ต้องใส่ input ใหม่จนกว่าถูก
     {
-        cout << "Please answer Yes or No (Y/N): ";
+        cout << "Please answer (Yes/No/Y/N): ";
         cin >> firstChoice;
         for (char &c : firstChoice)
             c = tolower(c);
     }
 
     if (firstChoice == "y" || firstChoice == "yes")
-{
-    bool found = searchByName(status, time, N1, N2);
-    if (found)
-        return 0;
-}
+    {
+        bool found = searchByName(status, time, N1, N2);
+        if (found)
+            return 0;
+    }
 
     Ans = "Y";
 
@@ -168,20 +168,20 @@ int main()
         showData(status, time, N_table, N1, N2);
 
         cout << "[Choose Time] : ";
-while (!(cin >> N_time) || N_time < 1 || N_time > 3)
-{
-    cout << "Invalid time! Please enter number 1-3: ";
-    cin.clear();
-    cin.ignore(numeric_limits<streamsize>::max(), '\n');
-}
+        while (!(cin >> N_time) || N_time < 1 || N_time > 3) // แก้ให้ต้องใส่ตัวเลขที่ถูกต้อง
+        {
+            cout << "Invalid time! Please enter number 1-3: ";
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        }
 
         cout << "[Choose Table] : ";
-        while (!(cin >> Table) || Table < 1 || Table > 5)
-{
-    cout << "Invalid table! Please enter number 1-5: ";
-    cin.clear();
-    cin.ignore(numeric_limits<streamsize>::max(), '\n');
-}
+        while (!(cin >> Table) || Table < 1 || Table > 5) // แก้ให้ต้องใส่ตัวเลขที่ถูกต้อง
+        {
+            cout << "Invalid table! Please enter number 1-5: ";
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        }
 
         int index = (N_time - 1) * 5 + (Table - 1);
 
@@ -201,9 +201,9 @@ while (!(cin >> N_time) || N_time < 1 || N_time > 3)
             for (char &c : Ans)
                 c = tolower(c);
 
-            while (Ans != "y" && Ans != "yes" && Ans != "n" && Ans != "no")
+            while (Ans != "y" && Ans != "yes" && Ans != "n" && Ans != "no") // แก้ให้ต้องใส่ input ใหม่จนกว่าถูก
             {
-                cout << "Please answer Yes or No (Y/N): ";
+                cout << "Please answer (Yes/No/Y/N): ";
                 cin >> Ans;
                 for (char &c : Ans)
                     c = tolower(c);
